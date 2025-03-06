@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+const Bookshelf = () => {
 
 const [books, setBooks] = useState([
     { title: 'Green Eggs and Ham', author: 'Dr. Seuss' },
@@ -12,12 +13,18 @@ const handleInputChange = (event) => {
     setNewBook((prevBookValue) => ({ ...prevBookValue, [name]: value, }));
 };
 
-const Bookshelf = () => {
+const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!newBook.title || !newBook.author) return;
+    setBooks((prevBookValue) => [...prevBookValue, newBook]);
+    setNewBook({title: '', author: '',})
+};
 
     return (
         <div className="bookshelfDiv">
             <div className="formDiv">
                 <h3>Add a Book</h3>
+                <form onSubmit={handleSubmit}>
                 <input
           type="text"
           name="title"
@@ -32,6 +39,8 @@ const Bookshelf = () => {
           value={newBook.author}
           onChange={handleInputChange} // Calls function on input change
         />
+           <button type="submit">Add Book</button>
+        </form>
       </div>
 
       <div className="bookCardsDiv">
@@ -46,3 +55,5 @@ const Bookshelf = () => {
     </div>
   );
 };
+
+export default Bookshelf;
